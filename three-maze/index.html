@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Three Maze</title>
+    <link
+      href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="static/assets/css/styles.css"
+    />
+  </head>
+  <body>
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+      <div class="loader"></div>
+    </div>
+    <div class="three">
+      <div class="button-wrapper">
+          <button class="generate">
+              Submit Code
+          </button>
+          <button class="toggle-editor">
+            Toggle Editor
+        </button>
+      </div>
+      <primrose style="display:none"></primrose>
+  </div>
+
+    <script
+      type="text/javascript"
+      src="static/assets/js/libs/three.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="static/assets/js/libs/tween.min.js"
+    ></script>
+    <script type="module" src="static/assets/js/threemaze.js"></script>
+    <script
+      type="text/javascript"
+      src="static/assets/js/threemaze.generate.js"
+    ></script>
+    <script type="module" src="static/assets/js/libs/primrose.js"></script>
+    <script type="text/javascript">
+      window.onload = function () {
+        var wrapper = document.querySelector(".three");
+        var button = document.querySelector(".generate");
+        new ThreeMaze(wrapper, button);
+      };
+
+
+      var primrose = document.querySelector("primrose");
+      var primroseVisible = false;
+    
+      function togglePrimrose() {
+        primroseVisible = !primroseVisible;
+        primrose.style.opacity = primroseVisible ? 0.5 : 0;
+        primrose.style.zIndex = primroseVisible ? 2 : -1;
+      }
+      
+      document.addEventListener("keydown", function (event) {
+        if ((event.ctrlKey || event.metaKey) && event.code === "Space") {
+          togglePrimrose();
+        }
+      });
+      
+      // Add an event listener for the "Toggle Editor" button
+      var toggleEditorButton = document.querySelector(".toggle-editor");
+      toggleEditorButton.addEventListener("click", togglePrimrose);
+      
+    </script>
+    <div id="myModal" class="modal">
+          <button class="close">
+              Close
+          </button>
+      <div id="modalText" class="modal-content"></div>
+    </div>
+  </body>
+</html>
