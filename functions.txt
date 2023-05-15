@@ -1,25 +1,21 @@
-def drive_forward(maze, current_position, direction):
-    x, y = current_position
-    if direction == 'up':
-        next_position = (x, y - 1)
-    elif direction == 'down':
-        next_position = (x, y + 1)
-    elif direction == 'left':
-        next_position = (x - 1, y)
-    else:  # direction == 'right'
-        next_position = (x + 1, y)
-    
-    if maze[next_position[1]][next_position[0]] == 1:  # check if the next position is open
-        return next_position
-    else:
-        return current_position  # if it's a wall, stay in the current position
+# x, y = current_position You should define this in your own code. very important.
 
-def turn_left(direction):
+def detect_wall(maze, current_position, direction):
     if direction == 'up':
-        return 'left'
+        return maze[x, y - 1] == 0
     elif direction == 'down':
-        return 'right'
+        return maze[x, y + 1] == 0
     elif direction == 'left':
-        return 'down'
+        return maze[x - 1, y] == 0
     else:  # direction == 'right'
-        return 'up'
+        return maze[x + 1, y] == 0
+
+def drive_maze(maze, current_position, direction):
+    if direction == 'up':
+        current_position = (x, y - 1)
+    elif direction == 'down':
+        current_position = (x, y + 1)
+    elif direction == 'left':
+        current_position = (x - 1, y)
+    else:  # direction == 'right'
+        current_position = (x + 1, y)

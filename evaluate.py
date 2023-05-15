@@ -3,16 +3,21 @@ import openai
 from dotenv import load_dotenv
 import re
 
-async def evaluate(code, maze):
+def evaluate(code, maze):
     # Here is where you will evaluate the code and return the results
     # start bottom right, end top left
     start = (2 ,2)
     end = (5, 5)
     path_taken =  [(5, 5), (4, 5), (3, 5), (2, 5), (2, 4), (2, 3), (2 ,2)]
     namespace = {'maze': maze, 'start': start, 'end': end}
-    #exec(code, {}, namespace)
-    # result = namespace["result"]
-    result = False
+    exec(code +  "\nresult = execute_labyrinth()", {}, namespace)
+    result_path = namespace["result"]
+
+    # Check if the result is correct
+    if (result_path[0] == end):
+        result = True
+    else:
+        result = False
     
     # Call to OpenAI to get the feedback and score
     load_dotenv()

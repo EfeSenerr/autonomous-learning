@@ -63,7 +63,7 @@ async def codecheck(maze_id: int = Body(...), code: str = Body(...)):
     #Test Backend
     maze = await get_maze(maze_id) # await added
     translated_pseudo_code = translate(code, maze)
-    result, score, feedback, path_taken = await evaluate(
+    result, score, feedback, path_taken = evaluate(
         translated_pseudo_code, maze
     )
     ###
