@@ -37,7 +37,7 @@ async def get(request: Request):
 
 @app.post("/codecheck")
 async def codecheck(maze_id: int = Body(...), code: str = Body(...)):
-    maze = get_maze(maze_id)
+    maze = await get_maze(maze_id)
     translated_pseudo_code = translate(code, maze)
     result, score, feedback, path_taken = evaluate(
         translated_pseudo_code, maze
@@ -63,7 +63,7 @@ async def codecheck(maze_id: int = Body(...), code: str = Body(...)):
     #Test Backend
     maze = await get_maze(maze_id) # await added
     translated_pseudo_code = translate(code, maze)
-    result, score, feedback, path_taken = evaluate(
+    result, score, feedback, path_taken = await evaluate(
         translated_pseudo_code, maze
     )
     ###
