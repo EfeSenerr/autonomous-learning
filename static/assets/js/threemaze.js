@@ -144,7 +144,7 @@ ThreeMaze.prototype.simulateMaze = function() {
         "<p>Your Score was :</p> <p>" +
         data.score +
         "</p> <br><p> This is our Feedback: </p><br> <p>" + data.feedback +
-        '<br><br> <p>This is the code that is was translated to: </p><br> <code class = "language-python"> ' + data.code +' </code>';
+        '<br><br> <p>This is the code that is was translated to: </p><br> <code class = "language-python"> ' + data.translated_pseudo_code +' </code>';
       
       // Show the Modal
       this.modal.style.display = "block";
