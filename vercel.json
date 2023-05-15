@@ -5,4 +5,9 @@
 	"routes": [
 		{ "src": "/(.*)", "dest": "main.py" }
 	]
+	"functions": {
+    "api/test.js": {
+      "maxDuration": 120
+    }
+  }
 }
