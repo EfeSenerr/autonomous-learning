@@ -19,13 +19,13 @@ def translate(code, maze):
     openai.api_key = os.environ["OPENAI_API_KEY"]
     # openai.organization_id = os.environ["ORGANIZATION_ID"]
 
-    parameters = f"""
-    start_point = {start}
-    end_point = {end}
-    maze = {map_part}
-    current_position = start_point
-    direction = "up"
-    """
+    parameters = f"""start_point = {start}
+end_point = {end}
+maze = {map_part}
+current_position = start_point
+direction = "up"
+result = []
+"""
 
     #Here is where  the code is translated from pseudo-code to python
     #Primed the model with understanding the language

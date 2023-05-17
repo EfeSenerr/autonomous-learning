@@ -53,6 +53,7 @@ end_point = {end}
 maze = {map_part}
 current_position = start_point
 direction = "up"
+result = []
 """
 
     full_code = parameters + "\n" + functions_predefined + "\n" + code #  + "\nresult = execute_labyrinth()"
@@ -91,7 +92,7 @@ direction = "up"
             Main goal of this code is the player in the car tries to travel from start point {start} to end point {end} in this specific maze: {maze}. This code is not a general algorithm, but a specific one to solve this maze. When direction is 'down', one direction forward means going from (5, 5) to (4, 5).
             Please provide a short feedback and a score (0-100) of the given code. Also try to understand if the player can get from start point to end point using that python code and provide a percentage of success. Example solution would seems like this {path_taken}. 
             Most importantly please give the feedback, score and the percentage of success so that I will extract them as 'Score:\s*(\d+)', 'Feedback:\s*(.*)' and 'Percentage:\s*(\d+) using re.compile().'.
-            Here is the Python code: {code}"""},
+            This is the full code: {full_code}. This is the Python code you should provide feedback to: {code}"""},
         ]
     )
 
@@ -114,20 +115,16 @@ direction = "up"
     else:
         score = 31  # TODO: Handle this error
 
-    if percentage_match:
-        percentage = int(percentage_match.group(1))
-    else:
-        percentage = 31  # TODO: Handle this error
-
     if feedback_match:
         feedback = feedback_match.group(1).strip()
     else:
-        feedback = "No feedback ^^"  # TODO: Handle this error
+        feedback = "No feedback detected. Please try again :)"  # TODO: Handle this error
 
-    # Add the percentage to the feedback
-    feedback += f" Percentage of success: {percentage}%"
-
-    # score = 100
-    # feedback = "Nice work!"
+    if percentage_match:
+        percentage = percentage_match.group(1).strip()
+        feedback += f" Percentage of success: {percentage}%"
+    else:
+        percentage = 31 
+        feedback += f" Percentage of success could not be detected. Please try again :)"    
 
     return result, score, feedback, path_taken
