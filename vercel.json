@@ -4,10 +4,10 @@
 	"builds": [{ "src": "main.py", "use": "@vercel/python" }],
 	"routes": [
 		{ "src": "/(.*)", "dest": "main.py" }
-	]
+	],
 	"functions": {
-    "api/test.js": {
-      "maxDuration": 120
-    }
-  }
+    	"api/test.js": {
+      		"maxDuration": 120
+    	}
+  	}
 }
