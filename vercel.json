@@ -1,13 +1,13 @@
 {
 	"version": 2,
 	"public": false,
-	"builds": [{ "src": "main.py", "use": "@vercel/python" }],
-	"routes": [
-		{ "src": "/(.*)", "dest": "main.py" }
-	],
 	"functions": {
-    	"api/test.js": {
+		"api/main.py": {
+      		"runtime": "@vercel/python@0.4.0",
       		"maxDuration": 120
     	}
-  	}
+  	},
+  	"rewrites": [
+    	{ "source": "/(.*)", "destination": "main.py" }
+  	]
 }
