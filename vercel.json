@@ -2,7 +2,7 @@
 	"version": 2,
 	"public": false,
 	"functions": {
-		"api/main.py": {
+		"main.py": {
       		"runtime": "@vercel/python@0.4.0",
       		"maxDuration": 10
     	}
