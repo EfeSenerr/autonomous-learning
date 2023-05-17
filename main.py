@@ -1,5 +1,7 @@
 from typing import List
 from fastapi import FastAPI, Request, Body
+import sys
+sys.path.append('..')
 from evaluate import evaluate
 from translate import translate
 import os

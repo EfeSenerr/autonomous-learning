@@ -51,8 +51,9 @@ def translate(code, maze):
             The user is in a maze, the start point is {start}, end point is {end}, the maze looks similiar to this {map_part}.'0' being walls and '1' being walkable paths.
             The main goal of the game is to use pseudo code to guide a player from the start point to the end point in a maze. I also have these predefined python functions that correspond to the commands in the pseudo code: {functions_predefined}.
             Please convert the following pseudo code into python. Due to the execution time, I don't need the full execution script, just the translated part. 
-            Package the converted python code and return the path in a variable called 'result' and later I will add the predefined functions at the beginning of the script like this {parameters}, which will be executed. 
-            The final function will return the path that the pseudo instructions take and has the following format: {path_taken}. Just return the python code so that I can extract it like this '```python(.*?)```'. This is the pseudo code: {code}
+            Package the converted python code and return the path in a variable called 'result' which will return the path that the pseudo instructions take and has the following format: {path_taken}. 
+            Later I will add the predefined functions at the beginning of the script like this {parameters}, which will be executed. 
+            Just return the python code so that I can extract it like this '```python(.*?)```'. This is the pseudo code: {code}
             """},
         ]
     )

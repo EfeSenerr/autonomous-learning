@@ -10,9 +10,41 @@ def evaluate(code, maze):
     end = (5, 5)
     map_part = maze[0]['map']
     path_taken =  [(5, 5), (4, 5), (3, 5), (2, 5), (2, 4), (2, 3), (2 ,2)]
-    namespace = {'maze': maze, 'start': start, 'end': end}
-    
-    # Predefined functions
+    namespace = {}
+    def detect_wall(maze, current_position, direction):
+        x, y = current_position
+        if direction == 'up':
+            return maze[y - 1][x] == 0
+        elif direction == 'down':
+            return maze[y + 1][x] == 0
+        elif direction == 'left':
+            return maze[y][x - 1] == 0
+        else:  # direction == 'right'
+            return maze[y][x + 1] == 0
+
+    def drive_forward(maze, current_position, direction):
+        x, y = current_position
+        if direction == 'up' and not detect_wall(maze, current_position, 'up'):
+            current_position = (x, y - 1)
+        elif direction == 'down' and not detect_wall(maze, current_position, 'down'):
+            current_position = (x, y + 1)
+        elif direction == 'left' and not detect_wall(maze, current_position, 'left'):
+            current_position = (x - 1, y)
+        elif direction == 'right' and not detect_wall(maze, current_position, 'right'):  # direction == 'right'
+            current_position = (x + 1, y)
+        return current_position
+
+    def turn_left(direction):
+        if direction == 'up':
+            return 'left'
+        elif direction == 'down':
+            return 'right'
+        elif direction == 'left':
+            return 'down'
+        else:  # direction == 'right'
+            return 'up'
+        
+        # Predefined functions
     with open("functions.txt", "r", encoding="utf-8") as file:
         functions_predefined = file.read()
 
@@ -29,7 +61,7 @@ direction = "up"
 
     result_path = path_taken  #TODO change this later
     try:
-        exec(full_code, {}, namespace)
+        exec(full_code, {'detect_wall': detect_wall, 'turn_left': turn_left, 'drive_forward': drive_forward}, namespace)
         result_path = namespace["result"]
         print("Result Path:")
         print(result_path)
@@ -51,15 +83,15 @@ direction = "up"
 
     # OpenAI API call
     response = openai.ChatCompletion.create(
-        # model="gpt-3.5-turbo",
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful assistant providing feedback and a score for the given python code."},
-            {"role": "user", "content": f"I am going to give you a python code which was previously translated from the pseudo code, so it is also normal that there is no comment in the code. Assume that the defined functions without the code inside are defined correctly and working correctly. Focus on the usage & results of the functions. Main goal of this code is the player in the car tries to travel from start point {start} to end point {end} in this specific maze: {maze}. This code is not a general algorithm, but a specific one to solve this maze. One direction forward means going from (5, 5) to (4, 5)."},
-            {"role": "assistant", "content": "I understand. The player tries to get from the start point to the end point in the maze. I will assume that the defined functions are implemented corretly and focus on the usage of the functions and results of these functions."},
-            {"role": "user", "content": f"Please provide a short feedback and a score (0-100) of the given code. Also try to understand if the player can get from start point to end point using that python code and provide a percentage of success. Example solution would seems like this {path_taken}. Most importantly please give the feedback, score and the percentage so that I will extract them as 'Score:\s*(\d+)', 'Feedback:\s*(.*)' and 'Percentage:\s*(\d+)'."},
-            {"role": "assistant", "content": "I will give a short feedback, a score out of 100 and a success percentage of the player for the given code. Please provide the Python code."},
-            {"role": "user", "content": f"Here is the Python code: {code}"},
+            {"role": "user", "content": f"""I am going to give you a python code which was previously translated from the pseudo code, so it is also normal that there is no comment in the code. 
+            Assume that the defined functions without the code inside are defined correctly and working correctly. Focus on the usage & results of the functions. 
+            Main goal of this code is the player in the car tries to travel from start point {start} to end point {end} in this specific maze: {maze}. This code is not a general algorithm, but a specific one to solve this maze. When direction is 'down', one direction forward means going from (5, 5) to (4, 5).
+            Please provide a short feedback and a score (0-100) of the given code. Also try to understand if the player can get from start point to end point using that python code and provide a percentage of success. Example solution would seems like this {path_taken}. 
+            Most importantly please give the feedback, score and the percentage of success so that I will extract them as 'Score:\s*(\d+)', 'Feedback:\s*(.*)' and 'Percentage:\s*(\d+) using re.compile().'.
+            Here is the Python code: {code}"""},
         ]
     )
 
