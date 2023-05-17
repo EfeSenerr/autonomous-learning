@@ -22,7 +22,7 @@ def evaluate(code, maze):
         else:  # direction == 'right'
             return maze[y][x + 1] == 0
 
-    def drive_forward(maze, current_position, direction):
+    def drive_forward(maze, current_position, direction, result):
         x, y = current_position
         if direction == 'up' and not detect_wall(maze, current_position, 'up'):
             current_position = (x, y - 1)
@@ -32,6 +32,7 @@ def evaluate(code, maze):
             current_position = (x - 1, y)
         elif direction == 'right' and not detect_wall(maze, current_position, 'right'):  # direction == 'right'
             current_position = (x + 1, y)
+        result.append(current_position)
         return current_position
 
     def turn_left(direction):
@@ -54,6 +55,7 @@ maze = {map_part}
 current_position = start_point
 direction = "up"
 result = []
+result.append(current_position)
 """
 
     full_code = parameters + "\n" + functions_predefined + "\n" + code #  + "\nresult = execute_labyrinth()"
@@ -61,23 +63,24 @@ result = []
     print(full_code)
 
     result_path = path_taken  #TODO change this later
+    result = False
     try:
         exec(full_code, {'detect_wall': detect_wall, 'turn_left': turn_left, 'drive_forward': drive_forward}, namespace)
-        result_path = namespace["result"]
+        result_path = namespace["result"] #TODO inverse the path?
         print("Result Path:")
         print(result_path)
+            # Check if the result is correct
+        if (result_path[0] == end):
+            result = True
+        else:
+            result = False
     except Exception as e:
         error_message = str(e)
         print("Error occurred during execution: ", error_message)
         # result_path = path_taken
         # print("Result path replaced with the correct path.")
 
-    # Check if the result is correct
-    if (result_path[0] == end):
-        result = True
-    else:
-        result = False
-    
+  
     # Call to OpenAI to get the feedback and score
     load_dotenv()
     openai.api_key = os.environ["OPENAI_API_KEY"]
