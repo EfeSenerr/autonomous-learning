@@ -2,50 +2,20 @@ import os
 import openai
 from dotenv import load_dotenv
 import re
+from functions import detect_wall
+from functions import turn_left
+from functions import drive_forward
 
 def evaluate(code, maze):
     # Here is where you will evaluate the code and return the results
     # start bottom right, end top left
-    start = (2 ,2)
-    end = (5, 5)
+    end = (2 ,2)
+    start = (5, 5)
     map_part = maze[0]['map']
     path_taken =  [(5, 5), (4, 5), (3, 5), (2, 5), (2, 4), (2, 3), (2 ,2)]
     namespace = {}
-    def detect_wall(maze, current_position, direction):
-        x, y = current_position
-        if direction == 'up':
-            return maze[y - 1][x] == 0
-        elif direction == 'down':
-            return maze[y + 1][x] == 0
-        elif direction == 'left':
-            return maze[y][x - 1] == 0
-        else:  # direction == 'right'
-            return maze[y][x + 1] == 0
-
-    def drive_forward(maze, current_position, direction, result):
-        x, y = current_position
-        if direction == 'up' and not detect_wall(maze, current_position, 'up'):
-            current_position = (x, y - 1)
-        elif direction == 'down' and not detect_wall(maze, current_position, 'down'):
-            current_position = (x, y + 1)
-        elif direction == 'left' and not detect_wall(maze, current_position, 'left'):
-            current_position = (x - 1, y)
-        elif direction == 'right' and not detect_wall(maze, current_position, 'right'):  # direction == 'right'
-            current_position = (x + 1, y)
-        result.append(current_position)
-        return current_position
-
-    def turn_left(direction):
-        if direction == 'up':
-            return 'left'
-        elif direction == 'down':
-            return 'right'
-        elif direction == 'left':
-            return 'down'
-        else:  # direction == 'right'
-            return 'up'
         
-        # Predefined functions
+    # Predefined functions
     with open("functions.txt", "r", encoding="utf-8") as file:
         functions_predefined = file.read()
 
@@ -121,13 +91,13 @@ result.append(current_position)
     if feedback_match:
         feedback = feedback_match.group(1).strip()
     else:
-        feedback = "No feedback detected. Please try again :)"  # TODO: Handle this error
+        feedback = ""  # TODO: Handle this error
 
     if percentage_match:
         percentage = percentage_match.group(1).strip()
         feedback += f" Percentage of success: {percentage}%"
     else:
         percentage = 31 
-        feedback += f" Percentage of success could not be detected. Please try again :)"    
+        feedback += f""    
 
     return result, score, feedback, path_taken

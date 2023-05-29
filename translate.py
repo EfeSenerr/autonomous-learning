@@ -12,8 +12,8 @@ def translate(code, maze):
     # Now map_part contains the map array
     print(map_part)
 
-    start = (2 ,2)
-    end = (5, 5)
+    end = (2 ,2)
+    start = (5, 5)
     path_taken =  [(5, 5), (4, 5), (3, 5), (2, 5), (2, 4), (2, 3), (2 ,2)]
     load_dotenv()
     openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -33,8 +33,6 @@ result.append(current_position)
     #TODO Translate the maze to python which can then be used in exec() in evaluate.py
 
     # Read the content of the "pseudo_lang.txt" file
-    with open("pseudo_lang.txt", "r", encoding="utf-8") as file:
-        pseudo_structure = file.read()
     with open("pseudo_lang_2.txt", "r", encoding="utf-8") as file:
         pseudo_structure_2 = file.read()
     with open("functions.txt", "r", encoding="utf-8") as file:
