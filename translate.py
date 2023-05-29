@@ -64,6 +64,7 @@ result.append(current_position)
     # Extract the Python code from the output
     code_pattern = re.compile(r'```python(.*?)```', re.DOTALL)
     python_code = code_pattern.search(answer)
+    
     if python_code:
         extracted_code = python_code.group(1).strip()
     else:

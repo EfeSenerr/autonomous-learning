@@ -40,7 +40,7 @@ result.append(current_position)
         print("Result Path:")
         print(result_path)
             # Check if the result is correct
-        if (result_path[0] == end):
+        if (result_path[-1] == end):
             result = True
         else:
             result = False
