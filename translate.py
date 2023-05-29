@@ -25,6 +25,7 @@ maze = {map_part}
 current_position = start_point
 direction = "up"
 result = []
+result.append(current_position)
 """
 
     #Here is where  the code is translated from pseudo-code to python
