@@ -126,12 +126,12 @@ ThreeMaze.prototype.simulateMaze = function() {
 
           setTimeout(() => {
               if (currentX < prevX) { // When moving right in the flipped maze, currentX will be less than prevX
-                  document.dispatchEvent(downArrowEvent);
+                  document.dispatchEvent(downArrowEvent); //functioniert
               } else if (currentX > prevX) { // When moving left in the flipped maze, currentX will be greater than prevX
-                  document.dispatchEvent(leftArrowEvent);
-              } else if (currentY > prevY) {
                   document.dispatchEvent(upArrowEvent);
-              } else if (currentY < prevY) {
+              } else if (currentY > prevY) { //?
+                  document.dispatchEvent(leftArrowEvent);
+              } else if (currentY < prevY) {// funktioniert
                   document.dispatchEvent(rightArrowEvent);
               }
           }, 500 * i);
