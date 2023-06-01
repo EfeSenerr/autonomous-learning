@@ -100,4 +100,4 @@ result.append(current_position)
         percentage = 31 
         feedback += f""    
 
-    return result, score, feedback, path_taken
+    return result, score, feedback, result_path
