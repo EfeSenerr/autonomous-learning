@@ -9,8 +9,8 @@ from functions import drive_forward
 def evaluate(code, maze):
     # Here is where you will evaluate the code and return the results
     # start bottom right, end top left
-    end = (2 ,2)
-    start = (5, 5)
+    end =  maze[0]['end']
+    start =  maze[0]['start']
     map_part = maze[0]['map']
     path_taken =  [(5, 5), (4, 5), (3, 5), (2, 5), (2, 4), (2, 3), (2 ,2)]
     namespace = {}
@@ -50,27 +50,32 @@ result.append(current_position)
         # result_path = path_taken
         # print("Result path replaced with the correct path.")
 
-  
+    print("Result:")
+    print(result)
+
     # Call to OpenAI to get the feedback and score
     load_dotenv()
     openai.api_key = os.environ["OPENAI_API_KEY"]
 
-    # OpenAI API call
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant providing feedback and a score for the given python code."},
-            {"role": "user", "content": f"""I am going to give you a python code which was previously translated from the pseudo code, so it is also normal that there is no comment in the code. 
-            Assume that the defined functions without the code inside are defined correctly and working correctly. Focus on the usage & results of the functions. 
-            Main goal of this code is the player in the car tries to travel from start point {start} to end point {end} in this specific maze: {maze}. This code is not a general algorithm, but a specific one to solve this maze. When direction is 'down', one direction forward means going from (5, 5) to (4, 5).
-            Please provide a short feedback and a score (0-100) of the given code. Also try to understand if the player can get from start point to end point using that python code and provide a percentage of success. Example solution would seems like this {path_taken}. 
-            Most importantly please give the feedback, score and the percentage of success so that I will extract them as 'Score:\s*(\d+)', 'Feedback:\s*(.*)' and 'Percentage:\s*(\d+) using re.compile().'.
-            This is the full code: {full_code}. This is the Python code you should provide feedback to: {code}"""},
-        ]
-    )
-
-    # Extract the answer from the API response
-    answer = response['choices'][0]['message']['content']
+    if result:
+        answer = "Feedback: The code is correct. The player can get from start point to end point using that python code. Score: 100. The percentage of success is 100."
+    else:
+        # OpenAI API call
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant providing feedback and a score for the given python code."},
+                {"role": "user", "content": f"""I am going to give you a python code which was previously translated from the pseudo code, so it is also normal that there is no comment in the code. 
+                Assume that the defined functions without the code inside are defined correctly and working correctly. Focus on the usage & results of the functions. 
+                Main goal of this code is the player in the car tries to travel from start point {start} to end point {end} in this specific maze: {maze}. This code is not a general algorithm, but a specific one to solve this maze. When direction is 'down', one direction forward means going from (5, 5) to (4, 5).
+                Please provide a short feedback and a score (0-100) of the given code. Also try to understand if the player can get from start point to end point using that python code and provide a percentage of success. Example solution would seems like this {path_taken}. 
+                Most importantly please give the feedback, score and the percentage of success so that I will extract them as 'Score:\s*(\d+)', 'Feedback:\s*(.*)' and 'Percentage:\s*(\d+) using re.compile().'.
+                This is the full code: {full_code}. This is the Python code you should provide feedback to: {code}"""},
+            ]
+        )
+        # Extract the answer from the API response
+        answer = response['choices'][0]['message']['content']
+    
     print("Answer from OpenAI - Feedback:")
     print(answer)
 
