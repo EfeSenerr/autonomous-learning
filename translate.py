@@ -12,8 +12,8 @@ def translate(code, maze):
     # Now map_part contains the map array
     print(map_part)
 
-    end = (2 ,2)
-    start = (5, 5)
+    end =  maze[0]['end']
+    start =  maze[0]['start']
     path_taken =  [(5, 5), (4, 5), (3, 5), (2, 5), (2, 4), (2, 3), (2 ,2)]
     load_dotenv()
     openai.api_key = os.environ["OPENAI_API_KEY"]
