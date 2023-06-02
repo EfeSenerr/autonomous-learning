@@ -33,6 +33,9 @@ html, body
     top        : 0;
     background : #1c2327;
     height     : 115px;
+    display: flex; 
+    justify-content: flex-start; 
+    align-items: center;
 }
 
 @media screen and (max-width : 800px)
@@ -187,7 +190,9 @@ primrose {
     margin-left: 10px;
   }
 
-  /* Modal class */
+  button.reopen-feedback {
+    margin-left: 20px;
+  }
 
 .modal {
     display: none;

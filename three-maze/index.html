@@ -30,7 +30,10 @@
           </button>
           <button class="toggle-editor">
             Toggle Editor
-        </button>
+          </button>
+          <button class="reopen-feedback">
+            Reopen Feedback
+          </button>
       </div>
       <primrose style="display:none"></primrose>
   </div>
@@ -92,5 +95,25 @@
           </button>
       <div id="modalText" class="modal-content"></div>
     </div>
+    <script type="text/javascript">
+      var modal = document.getElementById("myModal");
+      var reopenModalBtn = document.querySelector(".reopen-feedback");
+    
+      // Add event listener to the modal close button
+      var closeButton = document.querySelector(".close");
+      closeButton.addEventListener("click", function () {
+        modal.style.display = "none";
+        reopenModalBtn.style.display = "block"; // Show the reopen feedback button
+      });
+    
+      // Add event listener to the reopen feedback button
+      reopenModalBtn.addEventListener("click", function () {
+        modal.style.display = "block";
+        reopenModalBtn.style.display = "none"; // Hide the reopen feedback button
+      });
+    
+      // Initial state of the reopen feedback button
+      reopenModalBtn.style.display = "none";
+    </script>
   </body>
 </html>
