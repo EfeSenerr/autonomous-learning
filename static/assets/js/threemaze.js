@@ -324,7 +324,8 @@ ThreeMaze.prototype.simulateMaze = function() {
         directional.position.set(0, 0.5, 1);
         this.scene.add(directional);
 
-        // Player
+        // Player 
+        // TODO look here for char
         this.player = new THREE.Object3D();
         var head_mesh = new THREE.Mesh(new THREE.SphereGeometry(this.thickness / 2, 9, 9), this.materials.red);
         var body_mesh = new THREE.Mesh(new THREE.CylinderGeometry(this.thickness / 6, this.thickness / 2, this.thickness * 1.5, 12, 1), this.materials.red);
