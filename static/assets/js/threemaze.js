@@ -25,8 +25,8 @@ import { Primrose } from "/static/assets/js/libs/primrose.js";
         this.thickness = 20;
         this.current_level = 0;
         this.new_map = [];
-        this.end_x = 1;
-        this.end_y = 1;
+        this.end_x = 2;
+        this.end_y = 3;
         this.editor = new Primrose({
             element: document.querySelector("primrose")
         });
@@ -81,6 +81,9 @@ import { Primrose } from "/static/assets/js/libs/primrose.js";
         .then(response => response.json())
         .then(data => {
             setData(data[0].map, data[0].side);
+            instance.end_y = data[0].end_y;
+            instance.end_x = data[0].end_x;
+            console.log("Recieved end", instance.end_x, instance.end_y);
         })
         .catch(error => console.error(error));
 }
@@ -109,7 +112,6 @@ ThreeMaze.prototype.simulateMaze = function() {
       return response.json();
   })
   .then(data => {
-      console.log('Success:', data);
 
       // Hide the loading overlay
       setLoadingOverlayVisible(false);
@@ -136,6 +138,7 @@ ThreeMaze.prototype.simulateMaze = function() {
               }
           }, 500 * i);
       }
+
 
       // Pop up a modal with the result
       var modalText = document.getElementById("modalText");
@@ -329,6 +332,30 @@ ThreeMaze.prototype.simulateMaze = function() {
         this.player = new THREE.Object3D();
         var head_mesh = new THREE.Mesh(new THREE.SphereGeometry(this.thickness / 2, 9, 9), this.materials.red);
         var body_mesh = new THREE.Mesh(new THREE.CylinderGeometry(this.thickness / 6, this.thickness / 2, this.thickness * 1.5, 12, 1), this.materials.red);
+        // player's eyes
+        var eyeGeometry = new THREE.SphereGeometry(this.thickness / 10, 32, 32); // smaller spheres for eyes
+        var eyeMaterial = new THREE.MeshBasicMaterial({color: 0xFFFFFF}); // change eye color to grey
+        var eyeBallMaterial = new THREE.MeshBasicMaterial({color: 0x000000});
+        var rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial); // create right eye
+        var leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial); // create left eye
+
+        var rightEyeBall = new THREE.Mesh(eyeGeometry, eyeBallMaterial)
+        var leftEyeBall = new THREE.Mesh(eyeGeometry, eyeBallMaterial);
+        
+        // reposition the eyes to the other side of the head
+        rightEye.position.set(this.thickness / 4, this.thickness / 3, -(this.thickness / 2 - 2));
+        leftEye.position.set(-this.thickness / 4, this.thickness / 3, -(this.thickness / 2 - 2));
+
+        rightEyeBall.position.set(this.thickness / 4, this.thickness / 3, -(this.thickness / 2 - 1.8));
+        leftEyeBall.position.set(-this.thickness / 4, this.thickness / 3, -(this.thickness / 2 - 1.8));
+                
+        // add eyes to the head
+        head_mesh.add(rightEye);
+        head_mesh.add(leftEye);
+
+        head_mesh.add(rightEyeBall);
+        head_mesh.add(leftEyeBall);
+
         this.player.add(head_mesh);
         this.player.add(body_mesh);
         head_mesh.position.y = this.thickness * 1.5;
@@ -337,7 +364,14 @@ ThreeMaze.prototype.simulateMaze = function() {
 
         // End of the maze
         this.end = new THREE.Mesh(new THREE.CubeGeometry(this.thickness, this.thickness, this.thickness, 1, 1, 1), this.materials.red);
-        this.end.position.set(-((this.side / 2) * this.thickness) + (this.thickness * 2), 0, -((this.side / 2) * this.thickness) + (this.thickness * 2));
+        this.end.position.set(- (this.side - this.end_x) * 20 + (this.thickness * 2), 0, - ( this.side - this.end_y) * 20 + (this.thickness * 2));
+        console.log("This is the y" , this.end_y);
+        console.log("This is the x" , this.end_x);
+        console.log("Original 2" , -((this.side / 2) * this.thickness) + (this.thickness * 2));
+        console.log("Original 1" , -((this.side / 1) * this.thickness) + (this.thickness * 2));
+
+
+
         this.end.scale.y = 0;
         this.end.visible = false;
         this.scene.add(this.end);
@@ -444,7 +478,8 @@ ThreeMaze.prototype.simulateMaze = function() {
         // End of the maze: starts again
         tween.onComplete(function()
         {
-            if (self.player.mazePosition.x === 2 && self.player.mazePosition.z === 2)
+            console.log("Finished??? x" , self.player.mazePosition.x, this.end_x, self.player.mazePosition.z, this.end_y);
+            if (self.player.mazePosition.x === self.end_x && self.player.mazePosition.z === self.end_y)
             {
                 self.onGenerateMaze();
             }

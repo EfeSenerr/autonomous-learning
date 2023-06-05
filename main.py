@@ -89,8 +89,8 @@ mock_mazes = [
                 [0, 0, 0, 0, 0],
             ],
             "side": 4,
-            "start": (3, 3),
-            "end": (2, 2),
+            "end_x": 2, #You can do it like this for the rest of the mazes
+            "end_y": 2,
         }
     ],
     [
