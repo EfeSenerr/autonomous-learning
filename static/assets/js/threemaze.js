@@ -63,6 +63,7 @@ import { Primrose } from "/static/assets/js/libs/primrose.js";
           // When the user clicks the close button, close the modal
           this.closeButton.onclick = () => {
             this.modal.style.display = "none";
+            this.onGenerateMaze();
           }
     };
 
