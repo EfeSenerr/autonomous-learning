@@ -23,7 +23,7 @@ def evaluate(code, maze):
 end_point = {end}
 maze = {map_part}
 current_position = start_point
-direction = "up"
+direction = "down"
 result = []
 result.append(current_position)
 """
