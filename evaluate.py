@@ -58,7 +58,7 @@ result.append(current_position)
     openai.api_key = os.environ["OPENAI_API_KEY"]
 
     if result:
-        answer = "Feedback: The code is correct. The player can get from start point to end point using that python code. Score: 100. The percentage of success is 100."
+        answer = "Feedback: The code is correct. Super! The player can get from start point to end point using that python code. Score: 100. The percentage of success is 100."
     else:
         # OpenAI API call
         response = openai.ChatCompletion.create(

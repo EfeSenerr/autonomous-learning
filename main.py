@@ -84,15 +84,31 @@ mock_mazes = [
             "map": [
                 [0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0],
-                [0, 0, 0, 1, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 1, 0], # start point is always right bottom corner
+                [0, 0, 0, 0, 0],
+            ],
+            "side": 4,
+            "end_x": 3, # You can do it like this for the rest of the mazes
+            "end_y": 2,
+            "start": (3, 3),
+            "end": (3, 2),
+        }
+    ],
+        [
+        {
+            "map": [
+                [0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0],
+                [0, 0, 1, 1, 0],
                 [0, 0, 0, 1, 0], # start point is always right bottom corner
                 [0, 0, 0, 0, 0],
             ],
             "side": 4,
             "end_x": 2, # You can do it like this for the rest of the mazes
-            "end_y": 3,
+            "end_y": 2,
             "start": (3, 3),
-            "end": (2, 3),
+            "end": (2, 2),
         }
     ],
     [

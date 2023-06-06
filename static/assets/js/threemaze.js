@@ -173,7 +173,7 @@ ThreeMaze.prototype.simulateMaze = function() {
     {
         retrieveMaze(this).then(() => {
         var new_map = this.new_map;
-
+        this.end.position.set(- (this.side - this.end_x) * 20 + (this.thickness * 2), 0, - ( this.side - this.end_y) * 20 + (this.thickness * 2));
         var new_player_path = [];
         var latency = 50;
         var self = this;
