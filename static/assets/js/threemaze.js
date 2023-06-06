@@ -83,7 +83,6 @@ import { Primrose } from "/static/assets/js/libs/primrose.js";
             setData(data[0].map, data[0].side);
             instance.end_y = data[0].end_y;
             instance.end_x = data[0].end_x;
-            console.log("Recieved end", instance.end_x, instance.end_y);
         })
         .catch(error => console.error(error));
 }
@@ -365,12 +364,6 @@ ThreeMaze.prototype.simulateMaze = function() {
         // End of the maze
         this.end = new THREE.Mesh(new THREE.CubeGeometry(this.thickness, this.thickness, this.thickness, 1, 1, 1), this.materials.red);
         this.end.position.set(- (this.side - this.end_x) * 20 + (this.thickness * 2), 0, - ( this.side - this.end_y) * 20 + (this.thickness * 2));
-        console.log("This is the y" , this.end_y);
-        console.log("This is the x" , this.end_x);
-        console.log("Original 2" , -((this.side / 2) * this.thickness) + (this.thickness * 2));
-        console.log("Original 1" , -((this.side / 1) * this.thickness) + (this.thickness * 2));
-
-
 
         this.end.scale.y = 0;
         this.end.visible = false;
@@ -478,7 +471,6 @@ ThreeMaze.prototype.simulateMaze = function() {
         // End of the maze: starts again
         tween.onComplete(function()
         {
-            console.log("Finished??? x" , self.player.mazePosition.x, this.end_x, self.player.mazePosition.z, this.end_y);
             if (self.player.mazePosition.x === self.end_x && self.player.mazePosition.z === self.end_y)
             {
                 self.onGenerateMaze();
