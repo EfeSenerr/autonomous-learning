@@ -138,6 +138,8 @@ ThreeMaze.prototype.simulateMaze = function() {
               }
           }, 500 * i);
       }
+      setTimeout(() => {
+      }, 1500);
 
 
       // Pop up a modal with the result
@@ -474,7 +476,7 @@ ThreeMaze.prototype.simulateMaze = function() {
         {
             if (self.player.mazePosition.x === self.end_x && self.player.mazePosition.z === self.end_y)
             {
-                self.onGenerateMaze();
+                // self.onGenerateMaze();
             }
         });
         tween.start();
