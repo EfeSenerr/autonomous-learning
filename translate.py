@@ -38,7 +38,10 @@ result.append(current_position)
     with open("functions.txt", "r", encoding="utf-8") as file:
         functions_predefined = file.read()
 
-    # test_code = "while ($i < 8) { print($i); $i++; } name2 = "Max";"
+    # Check input size
+    if len(code) > 2048 | len(code) < 3:
+        print("Code is too long or too short")
+        return ""
     # OpenAI API call
 
     # General response

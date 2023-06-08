@@ -14,7 +14,12 @@ def evaluate(code, maze):
     map_part = maze[0]['map']
     path_taken =  [(5, 5), (4, 5), (3, 5), (2, 5), (2, 4), (2, 3), (2 ,2)]
     namespace = {}
-        
+
+    # Check input size
+    if len(code) > 2048 | len(code) < 3:
+        print("Code is too long or too short")
+        return False, 0, "The given code is either too long or too short. Please try again!", [start]
+
     # Predefined functions
     with open("functions.txt", "r", encoding="utf-8") as file:
         functions_predefined = file.read()
