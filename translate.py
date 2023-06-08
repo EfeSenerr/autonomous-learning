@@ -42,24 +42,28 @@ result.append(current_position)
     # OpenAI API call
 
     # General response
-    response = openai.ChatCompletion.create(
-    model="gpt-4",
-    messages=[
-            {"role": "system", "content": """You are a helpful translator that translates a from pseudo language to python language to generically solve a maze."""},
-            {"role": "user", "content": f"""This is the structure of the pseudo code that will be given: {pseudo_structure_2}. 
-            The user is in a maze, the start point is {start}, end point is {end}, the maze looks similiar to this {map_part}.'0' being walls and '1' being walkable paths.
-            The main goal of the game is to use pseudo code to guide a player from the start point to the end point in a maze. I also have these predefined python functions that correspond to the commands in the pseudo code: {functions_predefined}.
-            Please convert the following pseudo code into python. Due to the execution time, I don't need the full execution script, just the translated part. 
-            Package the converted python code and return the path in a variable called 'result' which will return the path that the pseudo instructions take and has the following format: {path_taken}. 
-            Later I will add the predefined functions at the beginning of the script like this {parameters}, which will be executed. 
-            Just return the python code so that I can extract it like this '```python(.*?)```'. This is the pseudo code: {code}
-            """},
-        ]
-    )
-    #You have these predefined functions available: {functions_predefined}.
-    # Extract the answer from the API response
-    answer = response['choices'][0]['message']['content']
-    print(answer)
+    try:
+        response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+                {"role": "system", "content": """You are a helpful translator that translates a from pseudo language to python language to generically solve a maze."""},
+                {"role": "user", "content": f"""This is the structure of the pseudo code that will be given: {pseudo_structure_2}. 
+                The user is in a maze, the start point is {start}, end point is {end}, the maze looks similiar to this {map_part}.'0' being walls and '1' being walkable paths.
+                The main goal of the game is to use pseudo code to guide a player from the start point to the end point in a maze. I also have these predefined python functions that correspond to the commands in the pseudo code: {functions_predefined}.
+                Please convert the following pseudo code into python. Due to the execution time, I don't need the full execution script, just the translated part. 
+                Package the converted python code and return the path in a variable called 'result' which will return the path that the pseudo instructions take and has the following format: {path_taken}. 
+                Later I will add the predefined functions at the beginning of the script like this {parameters}, which will be executed. 
+                Just return the python code so that I can extract it like this '```python(.*?)```'. This is the pseudo code: {code}
+                """},
+            ]
+        )
+        #You have these predefined functions available: {functions_predefined}.
+        # Extract the answer from the API response
+        answer = response['choices'][0]['message']['content']
+        print(answer)
+    except Exception as e:
+        print(f"Error while making API call: {e}")
+        return ""
 
     # Extract the Python code from the output
     code_pattern = re.compile(r'```python(.*?)```', re.DOTALL)
