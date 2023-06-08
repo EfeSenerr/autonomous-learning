@@ -65,21 +65,25 @@ result.append(current_position)
     if result:
         answer = "Feedback: The code is correct. Super! The player can get from start point to end point using that python code. Score: 100. The percentage of success is 100."
     else:
-        # OpenAI API call
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant providing feedback and a score for the given python code."},
-                {"role": "user", "content": f"""I am going to give you a python code which was previously translated from the pseudo code, so it is also normal that there is no comment in the code. 
-                Assume that the defined functions without the code inside are defined correctly and working correctly. Focus on the usage & results of the functions. 
-                Main goal of this code is the player in the car tries to travel from start point {start} to end point {end} in this specific maze: {maze}. This code is not a general algorithm, but a specific one to solve this maze. When direction is 'down', one direction forward means going from (5, 5) to (4, 5).
-                Please provide a short feedback and a score (0-100) of the given code. Also try to understand if the player can get from start point to end point using that python code and provide a percentage of success. Example solution would seems like this {path_taken}. 
-                Most importantly please give the feedback, score and the percentage of success so that I will extract them as 'Score:\s*(\d+)', 'Feedback:\s*(.*)' and 'Percentage:\s*(\d+) using re.compile().'.
-                This is the full code: {full_code}. This is the Python code you should provide feedback to: {code}"""},
-            ]
-        )
-        # Extract the answer from the API response
-        answer = response['choices'][0]['message']['content']
+        try:
+            # OpenAI API call
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant providing feedback and a score for the given python code."},
+                    {"role": "user", "content": f"""I am going to give you a python code which was previously translated from the pseudo code, so it is also normal that there is no comment in the code. 
+                    Assume that the defined functions without the code inside are defined correctly and working correctly. Focus on the usage & results of the functions. 
+                    Main goal of this code is the player in the car tries to travel from start point {start} to end point {end} in this specific maze: {maze}. This code is not a general algorithm, but a specific one to solve this maze. When direction is 'down', one direction forward means going from (5, 5) to (4, 5).
+                    Please provide a short feedback and a score (0-100) of the given code. Also try to understand if the player can get from start point to end point using that python code and provide a percentage of success. Example solution would seems like this {path_taken}. 
+                    Most importantly please give the feedback, score and the percentage of success so that I will extract them as 'Score:\s*(\d+)', 'Feedback:\s*(.*)' and 'Percentage:\s*(\d+) using re.compile().'.
+                    This is the full code: {full_code}. This is the Python code you should provide feedback to: {code}"""},
+                ]
+            )
+            # Extract the answer from the API response
+            answer = response['choices'][0]['message']['content']
+        except Exception as e:
+            print(f"Error while making API call: {e}")
+            answer = "Feedback: Unfortunataly can'T give feedback right now due to problem with the API call."
     
     print("Answer from OpenAI - Feedback:")
     print(answer)
