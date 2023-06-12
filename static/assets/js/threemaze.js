@@ -27,6 +27,8 @@ import { Primrose } from "/static/assets/js/libs/primrose.js";
         this.new_map = [];
         this.end_x = 2;
         this.end_y = 3;
+        this.animation_x = 2;
+        this.animation_y = 3;
         this.editor = new Primrose({
             element: document.querySelector("primrose")
         });
@@ -84,6 +86,8 @@ import { Primrose } from "/static/assets/js/libs/primrose.js";
             setData(data[0].map, data[0].side);
             instance.end_y = data[0].end_y;
             instance.end_x = data[0].end_x;
+            instance.animation_x = data[0].animation_x;
+            instance.animation_y = data[0].animation_y;
         })
         .catch(error => console.error(error));
 }
@@ -128,13 +132,17 @@ ThreeMaze.prototype.simulateMaze = function() {
 
           setTimeout(() => {
               if (currentX < prevX) { // When moving right in the flipped maze, currentX will be less than prevX
-                  document.dispatchEvent(downArrowEvent); //functioniert
+                  document.dispatchEvent(rightArrowEvent); //functioniert
+                  console.log("right");
               } else if (currentX > prevX) { // When moving left in the flipped maze, currentX will be greater than prevX
-                  document.dispatchEvent(upArrowEvent);
+                  document.dispatchEvent(linksArrowEvent);
+                    console.log("links");
               } else if (currentY > prevY) { //?
-                  document.dispatchEvent(leftArrowEvent);
+                  document.dispatchEvent(upArrowEvent);
+                    console.log("up");
               } else if (currentY < prevY) {// funktioniert
-                  document.dispatchEvent(rightArrowEvent);
+                  document.dispatchEvent(downArrowEvent);
+                    console.log("down");
               }
           }, 500 * i);
       }
@@ -158,6 +166,7 @@ ThreeMaze.prototype.simulateMaze = function() {
       if (data.result) {
           this.current_level += 1;
       }
+      console.log("end reached!");
   })
   .catch(error => {
       console.error('There has been a problem with your fetch operation:', error);
@@ -175,7 +184,7 @@ ThreeMaze.prototype.simulateMaze = function() {
     {
         retrieveMaze(this).then(() => {
         var new_map = this.new_map;
-        this.end.position.set(- (this.side - this.end_x) * 20 + (this.thickness * 2), 0, - ( this.side - this.end_y) * 20 + (this.thickness * 2));
+        this.end.position.set(- (this.animation_x) * 20, 0, - (this.animation_y) * 20);
         var new_player_path = [];
         var latency = 50;
         var self = this;
@@ -366,7 +375,6 @@ ThreeMaze.prototype.simulateMaze = function() {
 
         // End of the maze
         this.end = new THREE.Mesh(new THREE.CubeGeometry(this.thickness, this.thickness, this.thickness, 1, 1, 1), this.materials.red);
-        this.end.position.set(- (this.side - this.end_x) * 20 + (this.thickness * 2), 0, - ( this.side - this.end_y) * 20 + (this.thickness * 2));
 
         this.end.scale.y = 0;
         this.end.visible = false;
@@ -476,7 +484,8 @@ ThreeMaze.prototype.simulateMaze = function() {
         {
             if (self.player.mazePosition.x === self.end_x && self.player.mazePosition.z === self.end_y)
             {
-                // self.onGenerateMaze();
+                console.log('end on generate Maze'); 
+                self.onGenerateMaze();
             }
         });
         tween.start();

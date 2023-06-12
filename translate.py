@@ -2,6 +2,9 @@ import os
 import openai
 from dotenv import load_dotenv
 import re
+from functions import detect_wall
+from functions import turn_left
+from functions import drive_forward
 
 primer = """os.environ["maze"] = "maze"]"""
 
