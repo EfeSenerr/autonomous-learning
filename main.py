@@ -79,6 +79,7 @@ async def codecheck(maze_id: int = Body(...), code: str = Body(...)):
         }
 
 mock_mazes = [
+
     [
         { # 1
             "map": [
@@ -93,6 +94,8 @@ mock_mazes = [
             "end_y": 2,
             "start": (3, 3),
             "end": (3, 2),
+            "animation_x": -1,
+            "animation_y": 0,
         }
     ],
     [
@@ -109,6 +112,8 @@ mock_mazes = [
             "end_y": 2,
             "start": (3, 3),
             "end": (2, 2),
+            "animation_x": 0,
+            "animation_y": 0,
         }
     ],
     [
@@ -125,6 +130,8 @@ mock_mazes = [
             "end_y": 2,
             "start": (3, 3),
             "end": (2, 2),
+            "animation_x": 0,
+            "animation_y": 0,
         }
     ],
     [  
@@ -139,10 +146,12 @@ mock_mazes = [
                 [0, 0, 0, 0, 0, 0, 0],
             ],
             "side": 6, #size of the maze - 1
-            "end_x": 3,
-            "end_y": 6,
+            "end_x": 2,
+            "end_y": 5,
             "start": (5, 5),
             "end": (2, 5),
+            "animation_x": 1,
+            "animation_y": -2,
         }
     ],
     [ 
@@ -161,6 +170,8 @@ mock_mazes = [
             "end_y": 3,
             "start": (5, 5),
             "end": (3, 2),
+            "animation_x": 1,
+            "animation_y": 1,
         }
     ],
     [ 
@@ -177,10 +188,12 @@ mock_mazes = [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
             ],
             "side": 8, #size of the maze - 1
-            "end_x": 7,
-            "end_y": 6,
+            "end_x": 5,
+            "end_y": 4,
             "start": (7, 7),
             "end": (5, 4),
+            "animation_x": -1,
+            "animation_y": 0,
         }
     ],
     [
@@ -189,16 +202,20 @@ mock_mazes = [
                 [0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 1, 0, 1, 1, 0],
-                [0, 0, 1, 1, 0, 1, 0],
-                [0, 0, 1, 0, 1, 1, 0],
+                [0, 0, 1, 1, 1, 1, 0],
+                [0, 0, 1, 1, 1, 0, 0],
                 [0, 0, 1, 1, 1, 1, 0],
                 [0, 0, 0, 0, 0, 0, 0],
             ],
             "side": 6,
-            "end_x": 3,
-            "end_y": 3,
+            "end_x": 2,
+            "end_y": 2,
             "start": (5, 5),
             "end": (2, 2),
+            "animation_x": 1,
+            "animation_y": 1,
         }
     ],
+
+
 ]
