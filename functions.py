@@ -9,7 +9,7 @@ def detect_wall(maze, current_position, direction):
     else:  # direction == 'right'
         return maze[x - 1][y] == 0
 
-def drive_forward(maze, current_position, direction, result): # or go_forward
+def go_forward(maze, current_position, direction, result): # or go_forward
     x, y = current_position
     if direction == 'up' and not detect_wall(maze, current_position, 'up'):
         current_position = (x, y + 1)

@@ -2,7 +2,7 @@ import os
 import openai
 from dotenv import load_dotenv
 import re
-from functions import detect_wall, turn_left, drive_forward, turn_right, shortest_path, judge_path
+from functions import detect_wall, turn_left, go_forward, turn_right, shortest_path, judge_path
 
 def evaluate(code, maze):
     # Here is where you will evaluate the code and return the results
@@ -38,7 +38,7 @@ result.append(current_position)
     result_path = path_taken  #TODO change this later
     result = False
     try:
-        exec(full_code, {'detect_wall': detect_wall, 'turn_left': turn_left, 'turn_right': turn_right, 'drive_forward': drive_forward}, namespace)
+        exec(full_code, {'detect_wall': detect_wall, 'turn_left': turn_left, 'turn_right': turn_right, 'go_forward': go_forward}, namespace)
         result_path = namespace["result"] #TODO inverse the path?
         print("Result Path:")
         print(result_path)

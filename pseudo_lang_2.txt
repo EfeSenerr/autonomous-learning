@@ -1,5 +1,5 @@
 command> ::= <action> | <loop> | <function> | <variable> | <list>
-<action> ::= "Drive" <direction> "for" <value> "steps"
+<action> ::= "Go" <direction> "for" <value> "steps"
 <direction> ::= "forward" | "left"
 <value> ::= <integer> | <variable>
 <loop> ::= "repeat" <value> "times" ":" <input> "stop repeating" | "for each" <identifier> "in" <list> ":" <input> "end for each"
@@ -13,25 +13,25 @@ Examples:
 
 - Simple movement:
 ```
-Drive forward for 5 steps Turn left Drive forward for 3 steps
+Go forward for 5 steps Turn left Go forward for 3 steps
 ```
 
 - Using loops:
 ```
-repeat 3 times: Drive forward for 5 steps Turn left stop repeating
+repeat 3 times: Go forward for 5 steps Turn left stop repeating
 ```
 
 - Lists and iteration:
 ```
-set distances to create a list of 3, 4, 5 end of list for each distance in distances: Drive forward for distance steps Turn left end for each
+set distances to create a list of 3, 4, 5 end of list for each distance in distances: Go forward for distance steps Turn left end for each
 ```
 
 - Functions and variables:
 ```
-define moveAndTurn to do: Drive forward for 4 steps Turn left end definition setnumberOfMoves to 3 repeat numberOfMoves times: use moveAndTurn stop repeating
+define moveAndTurn to do: Go forward for 4 steps Turn left end definition setnumberOfMoves to 3 repeat numberOfMoves times: use moveAndTurn stop repeating
 ```
 
 - Recursion and complex conditions:
 ```
-define navigate(l) to do: if l equals 0 then return Drive forward for 1 step Turn leftuse navigate with l minus 1 Turn right Drive forward for 1 step Turn right use navigate with l minus 1 Turn left end definition use navigate with 3
+define navigate(l) to do: if l equals 0 then return Go forward for 1 step Turn leftuse navigate with l minus 1 Turn right Go forward for 1 step Turn right use navigate with l minus 1 Turn left end definition use navigate with 3
 ```
