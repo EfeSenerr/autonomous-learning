@@ -2,9 +2,9 @@ import os
 import openai
 from dotenv import load_dotenv
 import re
-from functions import detect_wall
-from functions import turn_left
-from functions import drive_forward
+# from functions import detect_wall
+# from functions import turn_left
+# from functions import drive_forward
 
 primer = """os.environ["maze"] = "maze"]"""
 
@@ -18,6 +18,7 @@ def translate(code, maze):
     end =  maze[0]['end']
     start =  maze[0]['start']
     path_taken =  [(5, 5), (4, 5), (3, 5), (2, 5), (2, 4), (2, 3), (2 ,2)]
+
     load_dotenv()
     openai.api_key = os.environ["OPENAI_API_KEY"]
     # openai.organization_id = os.environ["ORGANIZATION_ID"]
@@ -30,11 +31,6 @@ direction = "down"
 result = []
 result.append(current_position)
 """
-
-    #Here is where  the code is translated from pseudo-code to python
-    #Primed the model with understanding the language
-    #TODO Translate the maze to python which can then be used in exec() in evaluate.py
-
     # Read the content of the "pseudo_lang.txt" file
     with open("pseudo_lang_2.txt", "r", encoding="utf-8") as file:
         pseudo_structure_2 = file.read()
