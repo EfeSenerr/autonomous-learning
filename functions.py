@@ -51,11 +51,6 @@ def shortest_path(maze, start, end):
     rows, cols = len(maze), len(maze[0])
     queue = [start]
     visited = [[0]*cols for _ in range(rows)]  # 2D list to keep track of visited cells
-    # Add print statements to help debug the issue:
-    print(f"maze: {maze}")
-    print(f"maze dimensions: {len(maze)}x{len(maze[0])}")
-    print(f"start: {start}")
-    print(f"visited dimensions: {len(visited)}x{len(visited[0] if visited else [])}")
     visited[start[0]][start[1]] = 1  # Mark the start cell as visited
 
     while queue:
