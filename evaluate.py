@@ -66,7 +66,7 @@ result.append(current_position)
         try:
             # OpenAI API call
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant providing feedback and a score for the given python code."},
                     {"role": "user", "content": f"""I am going to give you a python code which was previously translated from the pseudo code, so it is also normal that there is no comment in the code. 
@@ -107,7 +107,7 @@ result.append(current_position)
 
     if percentage_match:
         percentage = percentage_match.group(1).strip()
-        feedback += f" Percentage of success: {percentage}%"
+        feedback += f""
     else:
         percentage = 31 
         feedback += f""    
