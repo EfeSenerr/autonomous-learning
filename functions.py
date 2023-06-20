@@ -83,4 +83,4 @@ def judge_path(maze, start, end, path_taken):
     elif len(shortest) == len(path_taken):
         return "You have taken the optimal path!! Amazing, you are doing great!"
     else:
-        return "You took a shorter path than the shortest path! Wow?!?!"
+        return ""
