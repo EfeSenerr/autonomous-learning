@@ -2,9 +2,7 @@ import os
 import openai
 from dotenv import load_dotenv
 import re
-from functions import detect_wall
-from functions import turn_left
-from functions import drive_forward
+from functions import detect_wall, turn_left, drive_forward, turn_right, shortest_path, judge_path
 
 def evaluate(code, maze):
     # Here is where you will evaluate the code and return the results
@@ -40,7 +38,7 @@ result.append(current_position)
     result_path = path_taken  #TODO change this later
     result = False
     try:
-        exec(full_code, {'detect_wall': detect_wall, 'turn_left': turn_left, 'drive_forward': drive_forward}, namespace)
+        exec(full_code, {'detect_wall': detect_wall, 'turn_left': turn_left, 'turn_right': turn_right, 'drive_forward': drive_forward}, namespace)
         result_path = namespace["result"] #TODO inverse the path?
         print("Result Path:")
         print(result_path)
@@ -113,5 +111,10 @@ result.append(current_position)
     else:
         percentage = 31 
         feedback += f""    
+
+    try:
+        feedback += f" {judge_path(maze, start, end, result_path)}"
+    except Exception as e:
+        print(f"Error while judging the path: {e}")
 
     return result, score, feedback, result_path

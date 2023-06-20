@@ -44,3 +44,48 @@ def turn_right(direction):
         return 'up'
     else:  # direction == 'right'
         return 'down'
+
+def shortest_path(maze, start, end):
+    parent = {}
+    maze = maze[0]['map']
+    rows, cols = len(maze), len(maze[0])
+    queue = [start]
+    visited = [[0]*cols for _ in range(rows)]  # 2D list to keep track of visited cells
+    # Add print statements to help debug the issue:
+    print(f"maze: {maze}")
+    print(f"maze dimensions: {len(maze)}x{len(maze[0])}")
+    print(f"start: {start}")
+    print(f"visited dimensions: {len(visited)}x{len(visited[0] if visited else [])}")
+    visited[start[0]][start[1]] = 1  # Mark the start cell as visited
+
+    while queue:
+        x, y = queue.pop(0)
+
+        if (x, y) == end:
+            path = []
+            while (x, y) != start:
+                path.append((x, y))
+                x, y = parent[(x, y)]
+            path.append(start)
+            return path[::-1]
+
+        for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < rows and 0 <= ny < cols and maze[nx][ny] == 1 and visited[nx][ny] == 0:
+                visited[nx][ny] = 1  # Mark the cell as visited
+                queue.append((nx, ny))
+                parent[(nx, ny)] = (x, y)
+
+
+def judge_path(maze, start, end, path_taken):
+    
+    shortest = shortest_path(maze, start, end)
+
+    if shortest is None:
+        return "No path found."
+    elif len(shortest) < len(path_taken):
+        return f"You could have taken a {len(path_taken)-len(shortest)} steps shorter path! Do you want to try again?"
+    elif len(shortest) == len(path_taken):
+        return "You have taken the optimal path!! Amazing, you are doing great!"
+    else:
+        return "You took a shorter path than the shortest path! Wow?!?!"
