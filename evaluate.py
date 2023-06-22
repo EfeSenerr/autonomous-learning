@@ -122,10 +122,10 @@ result.append(current_position)
         print(f"Error while judging the path: {e}")
 
 
-    if len(path_taken) == shortest_path(maze, start, end):
+    if len(path_taken) == len(shortest_path(maze, start, end)):
         score = 100
-    elif len(path_taken) > shortest_path(maze, start, end):
-        score = (shortest_path(maze, start, end) /  len(path_taken) * 100)
+    elif len(path_taken) > len(shortest_path(maze, start, end)):
+        score = (len(shortest_path(maze, start, end)) /  len(path_taken) * 100)
     else:
         score = 0
 
