@@ -92,31 +92,14 @@ result.append(current_position)
     print("Answer from OpenAI - Feedback:")
     print(answer)
 
-    # Extract the score and feedback from the answer
-    # score_pattern = re.compile(r'Score:\s*(\d+)', re.IGNORECASE)
     feedback_pattern = re.compile(r'Feedback:\s*(.*)', re.IGNORECASE)
-    # percentage_pattern = re.compile(r'Percentage:\s*(\d+)', re.IGNORECASE)
-
-    # score_match = score_pattern.search(answer)
     feedback_match = feedback_pattern.search(answer)
-    # percentage_match = percentage_pattern.search(answer)
-
-    # if score_match:
-    #     score = int(score_match.group(1))
-    # else:
-    #     score = 31  # TODO: Handle this error
 
     if feedback_match:
         feedback = feedback_match.group(1).strip()
     else:
         feedback = ""  # TODO: Handle this error
-
-    # if percentage_match:
-    #     percentage = percentage_match.group(1).strip()
-    #     feedback += f""
-    # else:
-    #     percentage = 31 
-    #     feedback += f""    
+  
 
     try:
         feedback += f" {judge_path(maze, start, end, result_path)}"
@@ -128,7 +111,7 @@ result.append(current_position)
 
     if len(result_path) == len(shortest_path(maze, start, end)):
         score = 100
-    elif len(result_path) > len(shortest_path(maze, start, end)):
+    elif len(result_path) > len(shortest_path(maze, start, end)): # TODO feedback
         score = round((len(shortest_path(maze, start, end)) / len(result_path) * 100), 2)
     else:
         score = 0
