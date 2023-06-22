@@ -76,9 +76,9 @@ result.append(current_position)
                     {"role": "user", "content": f"""I am going to give you a python code which was previously translated from the pseudo code, so it is also normal that there is no comment in the code. 
                     Assume that the defined functions without the code inside are defined correctly and working correctly. Focus on the usage & results of the functions. 
                     Main goal of this code is the player in the car tries to travel from start point {start} to end point {end} in this specific maze: {maze}. This code is not a general algorithm, but a specific one to solve this maze. When direction is 'down', one direction forward means going from (5, 5) to (4, 5).
-                    Please provide a short feedback and a score (0-100) of the given code. Also try to understand if the player can get from start point to end point using that python code and provide a percentage of success. Example solution would seems like this {path_taken}. 
+                    Please provide a short feedback and a score (0-100) of the given code. Also try to understand if the player can get from start point to end point using that python code. Example solution would seems like this {path_taken}. 
                     Most importantly please give the feedback, score so that I will extract them as 'Score:\s*(\d+)', 'Feedback:\s*(.*)' using re.compile().'.
-                    This is the full code: {full_code}. This is the Python code you should provide feedback to: {code}"""},
+                    This is the full code: {full_code}. The first part of the code is prewritten and you should provide feedback only to this part of the code: {code}"""},
                 ]
             )
             # Extract the answer from the API response
@@ -120,5 +120,13 @@ result.append(current_position)
         feedback += f" {judge_path(maze, start, end, result_path)}"
     except Exception as e:
         print(f"Error while judging the path: {e}")
+
+
+    if len(path_taken) == shortest_path(maze, start, end):
+        score = 100
+    elif len(path_taken) > shortest_path(maze, start, end):
+        score = (shortest_path(maze, start, end) /  len(path_taken) * 100)
+    else:
+        score = 0
 
     return result, score, feedback, result_path

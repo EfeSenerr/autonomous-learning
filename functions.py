@@ -84,3 +84,4 @@ def judge_path(maze, start, end, path_taken):
         return "You have taken the optimal path!! Amazing, you are doing great!"
     else:
         return ""
+    
