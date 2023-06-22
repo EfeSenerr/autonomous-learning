@@ -38,8 +38,12 @@ result.append(current_position)
         functions_predefined = file.read()
 
     # Check input size
-    if len(code) > 2048 | len(code) < 3:
-        print("Code is too long or too short")
+    print("Code length: ", len(str(code)))
+    if len(str(code)) < 3:
+        print("Code is too short")
+        return ""
+    elif len(str(code)) > 2048:
+        print("Code is too long")
         return ""
     # OpenAI API call
 
