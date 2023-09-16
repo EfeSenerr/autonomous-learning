@@ -10,17 +10,17 @@ def evaluate(code, maze):
     end =  maze[0]['end']
     start =  maze[0]['start']
     map_part = maze[0]['map']
-    path_taken =  [(5, 5), (4, 5), (3, 5), (2, 5), (2, 4), (2, 3), (2 ,2)]
+    path_taken =  []
     namespace = {}
 
     # Check input size
     print("Code length in evaluate: ", len(str(code)))
     if len(str(code)) < 3:
         print("Code is too short")
-        return False, 0, "The given code is either too long or too short. Please try again!", [start]
+        return False, 0, "The given code is either too long or too short. Please try again!", path_taken
     elif len(str(code)) > 2048:
         print("Code is too long")
-        return False, 0, "The given code is either too long or too short. Please try again!", [start]
+        return False, 0, "The given code is either too long or too short. Please try again!", path_taken
 
     # Predefined functions
     with open("functions.txt", "r", encoding="utf-8") as file:
@@ -41,6 +41,7 @@ result.append(current_position)
 
     result_path = path_taken  #TODO change this later
     result = False
+    score = 0
     try:
         exec(full_code, {'detect_wall': detect_wall, 'turn_left': turn_left, 'turn_right': turn_right, 'go_forward': go_forward}, namespace)
         result_path = namespace["result"] #TODO inverse the path?
@@ -57,8 +58,8 @@ result.append(current_position)
         # result_path = path_taken
         # print("Result path replaced with the correct path.")
 
-    print("Result:")
-    print(result)
+    # print("Result:")
+    # print(result)
 
     # Call to OpenAI to get the feedback and score
     load_dotenv()
@@ -87,7 +88,8 @@ result.append(current_position)
             answer = response['choices'][0]['message']['content']
         except Exception as e:
             print(f"Error while making API call: {e}")
-            answer = "Feedback: Unfortunataly can'T give feedback right now due to problem with the API call."
+            answer = "Feedback: Unfortunataly can't give feedback right now due to problem with the API call. Please contact the developers."
+            return False, 0, answer, result_path
     
     print("Answer from OpenAI - Feedback:")
     print(answer)
