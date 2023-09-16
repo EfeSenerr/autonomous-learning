@@ -1,4 +1,4 @@
-# autonomous-learning
+# Autonomous Learning
 IT-Based Learning
 
 ## Abstract of our paper
